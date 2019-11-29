@@ -20,7 +20,9 @@ const generateRandomBetween = (min, max, exclude) => {
 const renderListItem = (value, numOfRounds) => {
 	return (
 		<View key={value} style={styles.listItem}>
-			<View>#{numOfRounds}</View>
+			<View>
+				<Text>#{numOfRounds}</Text>
+			</View>
 			<Text>{value}</Text>
 		</View>
 	);
@@ -68,23 +70,32 @@ const GameScreen = props => {
 	};
 
 	return (
-		<View style={styles.screen}>
-			<Text>Opponent's Guess: </Text>
-			<NumberContainer>{currentGuess}</NumberContainer>
-			<Card style={styles.buttonContainer}>
-				<MainButton onPress={nextGuessHandler.bind(this, "lower")}>
-					<Ionicons name="md-remove" color="white" size={24} />
-				</MainButton>
-				<MainButton onPress={nextGuessHandler.bind(this, "greater")}>
-					<Ionicons name="md-add" color="white" size={24} />
-				</MainButton>
-			</Card>
-			<View style={styles.list}>
-				<ScrollView>
-					{pastGuesses.map((guess, index) =>
-						renderListItem(guess, pastGuesses.length - index)
-					)}
-				</ScrollView>
+		<View style={{ height: "100%", width: "100%" }}>
+			<View style={styles.screen}>
+				<Text>Opponent's Guess: </Text>
+				<NumberContainer>{currentGuess}</NumberContainer>
+				<Card style={styles.buttonContainer}>
+					<MainButton onPress={nextGuessHandler.bind(this, "lower")}>
+						<Ionicons name="md-remove" color="white" size={24} />
+					</MainButton>
+					<MainButton
+						onPress={nextGuessHandler.bind(this, "greater")}
+					>
+						<Ionicons name="md-add" color="white" size={24} />
+					</MainButton>
+				</Card>
+				<View style={styles.listContainer}>
+					<ScrollView contentContainerStyle={styles.list}>
+						{pastGuesses.map((guess, index) =>
+							renderListItem(guess, pastGuesses.length - index)
+						)}
+					</ScrollView>
+					{/* <ScrollView contentContainerStyle={styles.list}>
+						{pastGuesses.map((guess, index) => (
+							<Text>{}</Text>
+						))}
+					</ScrollView> */}
+				</View>
 			</View>
 		</View>
 	);
@@ -92,7 +103,7 @@ const GameScreen = props => {
 
 const styles = StyleSheet.create({
 	screen: {
-		// flex: 1,
+		flex: 1,
 		paddingTop: 10,
 		alignItems: "center",
 	},
@@ -104,18 +115,23 @@ const styles = StyleSheet.create({
 		maxWidth: "90%",
 	},
 	list: {
-		width: "80%",
+		alignItems: "center",
+		justifyContent: "flex-start",
+		width: "100%",
+		flexGrow: 1,
 	},
+	listContainer: { flex: 1, width: "80%" },
 	listItem: {
-		flex: 1,
 		borderColor: "#ccc",
+		borderWidth: 1,
 		padding: 15,
 		marginVertical: 10,
+		// flex: 1,
 		backgroundColor: "white",
-		borderWidth: 1,
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "space-around",
 		alignItems: "center",
+		width: "60%",
 	},
 });
 
